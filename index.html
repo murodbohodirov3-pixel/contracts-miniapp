@@ -181,7 +181,7 @@ async function enterApp(){
   el('loginPage').classList.add('hidden');
   el('app').classList.remove('hidden');
   await loadProfile();
-  active = profile && profile.role === 'admin' ? 'admin' : 'manager-view';
+  active = profile && profile.role === 'admin' ? 'admin' : 'all';
   await loadAll();
 }
 
@@ -216,11 +216,11 @@ function buildUI(){
   let html = '';
   if(isAdmin){ html += '<button id="tab-admin" data-tab="admin" class="admin">Админ</button>'; }
   html += departments.map(d=>'<button id="tab-'+d.id+'" data-tab="'+d.id+'">'+escapeHtml(d.name)+'</button>').join('');
-  if(isAdmin){ html += '<button id="tab-all" data-tab="all">Все проекты</button>'; }
+  html += '<button id="tab-all" data-tab="all">Все проекты</button>';
   el('tabs').innerHTML = html;
   el('tabs').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{active=b.dataset.tab;render();}));
   el('category').innerHTML = departments.map(d=>'<option value="'+d.id+'">'+escapeHtml(d.name)+'</option>').join('');
-  if(!isAdmin && profile.department_id){ active = profile.department_id; }
+  if(!isAdmin && !active){ active = 'all'; }
 }
 
 async function uploadFileIfAny(contractId){
