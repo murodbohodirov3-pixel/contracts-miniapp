@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Учет договоров Supabase</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     *{box-sizing:border-box;font-family:Inter,Arial,sans-serif}
     body{margin:0;background:linear-gradient(135deg,#eef2ff,#f8fafc 45%,#ecfdf5);color:#0f172a}
@@ -15,6 +16,27 @@
     .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}.stat{background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border:1px solid #e2e8f0;border-radius:22px;padding:18px;box-shadow:0 12px 30px #0f172a12}.stat span{display:block;color:#64748b;font-size:14px;margin-bottom:7px}.stat b{display:block;font-size:18px;line-height:1.35}.admin-panel{display:none;grid-template-columns:2fr 1fr;gap:18px;margin-bottom:20px}.admin-panel.show{display:grid}.card{background:rgba(255,255,255,.94);border:1px solid #e2e8f0;border-radius:24px;padding:20px;box-shadow:0 12px 30px #0f172a12}.card h2{margin:0 0 18px}.form{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}label{display:flex;flex-direction:column;gap:7px;color:#475569;font-weight:800;font-size:14px}input,select{border:1px solid #cbd5e1;border-radius:14px;padding:12px;font-size:15px;background:#fff}.full{grid-column:1/-1}.btn{margin-top:16px;padding:13px 18px;background:#0f172a;color:#fff;border:0;border-radius:15px;font-weight:900;cursor:pointer}.btn:hover{opacity:.92}.btn-purple{background:#7c3aed}.btn-secondary{margin-top:16px;margin-left:8px;padding:13px 18px;background:#e2e8f0;color:#0f172a;border:0;border-radius:15px;font-weight:900;cursor:pointer}.btn-danger{padding:8px 11px;background:#fee2e2;color:#b91c1c;border:0;border-radius:11px;font-weight:800;cursor:pointer}.btn-edit{padding:8px 11px;background:#ede9fe;color:#5b21b6;border:0;border-radius:11px;font-weight:800;cursor:pointer;margin-right:6px}.btn-link{padding:8px 11px;background:#e0f2fe;color:#075985;border:0;border-radius:11px;font-weight:800;cursor:pointer}
     .view-title{display:flex;justify-content:space-between;gap:14px;align-items:center;margin:10px 0 12px}.view-title h2{margin:0}.search input{width:390px}.tablebox{background:#fff;border:1px solid #e2e8f0;border-radius:22px;overflow:auto;box-shadow:0 12px 30px #0f172a12;margin-bottom:20px}table{width:100%;min-width:1120px;border-collapse:collapse}th,td{padding:13px;border-bottom:1px solid #e2e8f0;text-align:left;font-size:14px;vertical-align:top}th{background:#f8fafc;color:#475569;position:sticky;top:0}.right{text-align:right}.green{color:#15803d;font-weight:900}.red{color:#b91c1c;font-weight:900}.amount-line{font-size:14px;font-weight:900;white-space:nowrap}.empty{text-align:center;color:#64748b;padding:34px}.payments .row{display:grid;grid-template-columns:110px 1fr 1.2fr 190px 100px 130px 1.2fr;gap:10px;padding:12px 0;border-bottom:1px solid #e2e8f0;font-size:14px}.payments .amount-line{font-size:14px}
     @media(max-width:950px){.hero{display:block}.badge{display:inline-block;margin-top:15px}.stats{grid-template-columns:1fr 1fr}.admin-panel.show{grid-template-columns:1fr}.form{grid-template-columns:1fr}.view-title{display:block}.search input{width:100%;margin-top:10px}.payments .row{grid-template-columns:1fr}}
+
+    /* Mobile / Telegram Mini App layout */
+    @media(max-width:700px){
+      body{background:#f8fafc}
+      .wrap{padding:10px}
+      .hero{border-radius:18px;padding:16px;margin-bottom:12px}
+      .hero h1{font-size:20px;line-height:1.2}
+      .top-actions{margin-top:12px}.badge{font-size:12px;padding:8px 10px}.top-actions button{padding:8px 10px;font-size:12px}
+      .tabs{gap:7px;margin-bottom:12px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px}
+      .tabs button{white-space:nowrap;padding:10px 12px;font-size:13px;border-radius:13px}
+      .stats{grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+      .stat{padding:12px;border-radius:16px}.stat span{font-size:12px}.stat b{font-size:13px;line-height:1.35}
+      .card{padding:14px;border-radius:18px}.card h2{font-size:18px;margin-bottom:12px}
+      label{font-size:13px}input,select{padding:10px;border-radius:12px;font-size:14px}.btn,.btn-secondary{width:100%;margin-left:0;margin-top:10px;padding:12px;font-size:14px}
+      .view-title{margin:10px 0}.view-title h2{font-size:18px;margin-bottom:8px}.search input{width:100%}
+      .tablebox{background:transparent;border:0;box-shadow:none;overflow:visible}
+      table{min-width:0;width:100%;display:block}thead{display:none}tbody{display:block}tr{display:block;background:white;border:1px solid #e2e8f0;border-radius:18px;margin-bottom:12px;padding:10px;box-shadow:0 8px 22px #0f172a12}td{display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid #f1f5f9;padding:9px 4px;text-align:right;font-size:13px}td:last-child{border-bottom:0}td:before{content:attr(data-label);font-weight:800;color:#64748b;text-align:left;min-width:108px}.right{text-align:right}.amount-line{font-size:13px;white-space:normal}.fileCell,.actionCell{align-items:center}.btn-edit,.btn-danger,.btn-link{padding:8px 9px;font-size:12px}
+      .payments .row{display:block;background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:12px;margin-bottom:10px;box-shadow:0 8px 22px #0f172a10}.payments .row>div{padding:6px 0;border-bottom:1px solid #f1f5f9}.payments .row>div:last-child{border-bottom:0}
+      .login{padding:12px}.login-card{border-radius:22px;padding:20px}
+    }
+
   </style>
 </head>
 <body>
@@ -121,6 +143,7 @@ function msg(t,error=false){el('msg').className='msg'+(error?' error':'');el('ms
 function loginMsg(t,error=false){el('loginMsg').className='msg'+(error?' error':'');el('loginMsg').style.display='block';el('loginMsg').textContent=t}
 
 async function start(){
+  try{ if(window.Telegram && Telegram.WebApp){ Telegram.WebApp.ready(); Telegram.WebApp.expand(); } }catch(e){}
   el('loginBtn').addEventListener('click', login);
   el('logoutBtn').addEventListener('click', logout);
   el('refreshBtn').addEventListener('click', loadAll);
@@ -428,7 +451,7 @@ function renderTable(rows,isAdmin){
   rows.forEach(c=>{
     const p=getPaid(c.id), pUsd=getPaidUsd(c.id), cu=toUsd(c.contract_amount_uzs,c.contract_rate), r=Number(c.contract_amount_uzs||0)-p, ru=cu-pUsd;
     const tr=document.createElement('tr');
-    tr.innerHTML = '<td>'+escapeHtml(c.contract_date)+'</td><td>'+escapeHtml(catName(c.department_id))+'</td><td><b>'+escapeHtml(c.contractor)+'</b><br><small>'+escapeHtml(c.note)+'</small></td><td>'+escapeHtml(c.contract_number||'—')+'</td><td class="right"><span class="amount-line">'+dual(c.contract_amount_uzs,cu)+'</span></td><td class="right green"><span class="amount-line">'+dual(p,pUsd)+'</span></td><td class="right '+(r>0?'red':'green')+'"><span class="amount-line">'+dual(r,ru)+'</span></td><td class="fileCell"></td><td class="actionCell"></td>';
+    tr.innerHTML = '<td data-label="Дата">'+escapeHtml(c.contract_date)+'</td><td data-label="Подразделение">'+escapeHtml(catName(c.department_id))+'</td><td data-label="Контрагент"><b>'+escapeHtml(c.contractor)+'</b><br><small>'+escapeHtml(c.note)+'</small></td><td data-label="№ договора">'+escapeHtml(c.contract_number||'—')+'</td><td data-label="Договор" class="right"><span class="amount-line">'+dual(c.contract_amount_uzs,cu)+'</span></td><td data-label="Оплачено" class="right green"><span class="amount-line">'+dual(p,pUsd)+'</span></td><td data-label="Остаток" class="right '+(r>0?'red':'green')+'"><span class="amount-line">'+dual(r,ru)+'</span></td><td data-label="Файл" class="fileCell"></td><td data-label="Действие" class="actionCell"></td>';
     const fileCell = tr.querySelector('.fileCell');
     if(c.contract_file_path){const b=document.createElement('button');b.className='btn-link';b.textContent='Открыть';b.onclick=()=>openFile(c.contract_file_path);fileCell.appendChild(b);} else fileCell.textContent='Нет файла';
     const actionCell = tr.querySelector('.actionCell');
