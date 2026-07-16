@@ -10,7 +10,7 @@ export const newSessionToken = () => randomBytes(32).toString('base64url');
 
 export const setSessionCookie = (reply: FastifyReply, token: string) => reply.setCookie(sessionCookie, token, {
   httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
+  secure: process.env.COOKIE_SECURE !== 'false',
   sameSite: 'lax',
   path: '/',
   maxAge: Number(process.env.SESSION_TTL_SECONDS ?? 28_800)
