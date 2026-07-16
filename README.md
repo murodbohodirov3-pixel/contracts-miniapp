@@ -4,7 +4,7 @@
 
 ## Локальный запуск
 
-1. Скопировать `.env.example` в `.env` и задать уникальные `POSTGRES_PASSWORD` и `SESSION_SECRET`.
+1. Скопировать `.env.example` в `.env`, задать уникальные `POSTGRES_PASSWORD` и `SESSION_SECRET`, а в `DATABASE_URL` использовать `?sslmode=disable` для внутреннего Docker PostgreSQL.
 2. Запустить стек: `docker compose up -d --build`. Контейнер `migrate` применит миграции до запуска API.
 4. Открыть `http://localhost:8080` и проверить `http://localhost:8080/health/ready`.
 
