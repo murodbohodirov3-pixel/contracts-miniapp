@@ -1,0 +1,12 @@
+DROP INDEX IF EXISTS audit_logs_created_at_idx;
+DROP INDEX IF EXISTS audit_logs_entity_idx;
+DROP INDEX IF EXISTS user_sessions_active_idx;
+DROP INDEX IF EXISTS contract_files_contract_idx;
+DROP INDEX IF EXISTS payments_contract_date_idx;
+DROP INDEX IF EXISTS contracts_inn_idx;
+DROP INDEX IF EXISTS contracts_number_idx;
+DROP INDEX IF EXISTS contracts_status_idx;
+DROP INDEX IF EXISTS contracts_visible_idx;
+DROP INDEX IF EXISTS user_departments_department_idx;
+DROP INDEX IF EXISTS departments_active_code_idx;
+DROP INDEX IF EXISTS users_active_email_idx;

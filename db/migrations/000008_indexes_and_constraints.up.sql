@@ -1,0 +1,12 @@
+CREATE INDEX users_active_email_idx ON users (email) WHERE is_active;
+CREATE INDEX departments_active_code_idx ON departments (code) WHERE is_active;
+CREATE INDEX user_departments_department_idx ON user_departments (department_id, user_id);
+CREATE INDEX contracts_visible_idx ON contracts (department_id, contract_date DESC) WHERE deleted_at IS NULL;
+CREATE INDEX contracts_status_idx ON contracts (contract_status) WHERE deleted_at IS NULL;
+CREATE INDEX contracts_number_idx ON contracts (contract_number) WHERE deleted_at IS NULL;
+CREATE INDEX contracts_inn_idx ON contracts (contractor_inn) WHERE deleted_at IS NULL;
+CREATE INDEX payments_contract_date_idx ON payments (contract_id, payment_date DESC) WHERE voided_at IS NULL;
+CREATE INDEX contract_files_contract_idx ON contract_files (contract_id) WHERE deleted_at IS NULL;
+CREATE INDEX user_sessions_active_idx ON user_sessions (user_id, expires_at) WHERE revoked_at IS NULL;
+CREATE INDEX audit_logs_entity_idx ON audit_logs (entity_type, entity_id, created_at DESC);
+CREATE INDEX audit_logs_created_at_idx ON audit_logs (created_at DESC);
