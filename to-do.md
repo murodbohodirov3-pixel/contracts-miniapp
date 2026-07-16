@@ -44,6 +44,7 @@
 - 2026-07-16: bootstrap первого администратора запускается из production `dist`, без dev-зависимостей внутри API-контейнера.
 - 2026-07-16: `COOKIE_SECURE` явно управляет временным HTTP smoke-test; для HTTPS production значение остаётся `true`.
 - 2026-07-16: `ops/deploy/update.sh` подготовлен для Ubuntu; Bash отсутствует в текущей Windows-сессии, поэтому syntax check и фактический запуск выполняются на сервере пользователя.
+- 2026-07-16: серверный `docker compose config` выявил YAML parser error в flow mapping API environment; конфигурация исправлена отдельным commit для повторной проверки на сервере.
 
 ## Следующий шаг
 
