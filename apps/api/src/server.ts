@@ -9,6 +9,7 @@ import { canAccessDepartment, clearSessionCookie, createSession, isAdmin, loadSe
 import { createDatabase, type Database, withTransaction } from './db.js';
 import { registerContractRoutes } from './contract-routes.js';
 import { registerReportRoutes } from './report-routes.js';
+import { registerAdminRoutes } from './admin-routes.js';
 
 declare module 'fastify' { interface FastifyRequest { authUser: AuthUser | null } }
 
@@ -125,6 +126,7 @@ export const buildApp = (db: Database = createDatabase()): FastifyInstance => {
   });
   void app.register(async (scope) => registerContractRoutes(scope, db));
   void app.register(async (scope) => registerReportRoutes(scope, db));
+  void app.register(async (scope) => registerAdminRoutes(scope, db));
   return app;
 };
 
