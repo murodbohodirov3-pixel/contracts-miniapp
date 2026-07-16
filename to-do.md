@@ -45,6 +45,7 @@
 - 2026-07-16: `COOKIE_SECURE` явно управляет временным HTTP smoke-test; для HTTPS production значение остаётся `true`.
 - 2026-07-16: `ops/deploy/update.sh` подготовлен для Ubuntu; Bash отсутствует в текущей Windows-сессии, поэтому syntax check и фактический запуск выполняются на сервере пользователя.
 - 2026-07-16: серверный `docker compose config` выявил YAML parser error в flow mapping API environment; конфигурация исправлена отдельным commit для повторной проверки на сервере.
+- 2026-07-16: серверный build выявил отсутствующий Node image tag; Dockerfile обновлены на существующие фиксированные official tags Node 24.18.0/Alpine 3.23 и Nginx 1.30.3/Alpine 3.23.
 
 ## Следующий шаг
 

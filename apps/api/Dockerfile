@@ -1,4 +1,4 @@
-FROM node:24.12.0-alpine3.21 AS build
+FROM node:24.18.0-alpine3.23 AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
 COPY apps/api/package.json apps/api/package.json
@@ -7,7 +7,7 @@ COPY tsconfig.base.json ./
 COPY apps/api apps/api
 RUN npm run build --workspace=@contracts/api
 
-FROM node:24.12.0-alpine3.21
+FROM node:24.18.0-alpine3.23
 WORKDIR /app
 ENV NODE_ENV=production
 COPY package.json package-lock.json ./
