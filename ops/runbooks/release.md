@@ -1,7 +1,7 @@
 # Выпуск и rollback
 
 1. Снять и проверить backup.
-2. Выполнить `docker compose build` и `docker compose run --rm migrate` в staging/временном проекте.
-3. Прогнать health endpoints и пользовательский smoke-test.
-4. На production выполнить `docker compose up -d --build`; PostgreSQL не публикуется наружу.
-5. При ошибке приложения вернуть предыдущие образы; schema rollback не выполняется автоматически. Любое обратное изменение схемы — отдельная проверенная миграция и backup restore по необходимости.
+2. На сервере выполнить `bash ops/deploy/update.sh`. Скрипт делает `git pull --ff-only`, проверяет Compose, очищает только cache/dangling images старше 7 дней, запускает стек и до 5 раз проверяет оба health endpoint.
+3. Прогнать пользовательский smoke-test в браузере.
+4. PostgreSQL не публикуется наружу. Volumes и данные не удаляются скриптом обновления.
+5. При ошибке приложения вернуть предыдущий Git commit и повторно запустить скрипт; schema rollback не выполняется автоматически. Любое обратное изменение схемы — отдельная проверенная миграция и backup restore по необходимости.
