@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:17.2-alpine3.21
+    env_file: .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-contracts}
+      POSTGRES_USER: ${POSTGRES_USER:-contracts_app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes: [postgres_data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  migrate:
+    image: migrate/migrate:v4.18.3
+    profiles: [migrate]
+    depends_on:
+      postgres: { condition: service_healthy }
+    volumes: [./db/migrations:/migrations:ro]
+    command: ["-path=/migrations", "-database=${DATABASE_URL}", "up"]
+
+  api:
+    build: { context: ., dockerfile: apps/api/Dockerfile }
+    env_file: .env
+    environment: { PORT: 3000, DATABASE_URL: ${DATABASE_URL} }
+    depends_on:
+      postgres: { condition: service_healthy }
+    volumes: [contract_files:/var/lib/contracts/files]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/health/live').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  gateway:
+    build: { context: ., dockerfile: config/gateway.Dockerfile }
+    depends_on:
+      api: { condition: service_healthy }
+    ports: ["8080:8080"]
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  contract_files:

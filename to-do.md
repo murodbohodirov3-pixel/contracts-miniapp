@@ -17,7 +17,7 @@
 - [x] Проверить перенос `index.html` в `legacy/index.html`, `README.md` и `project_deploy.md`; сохранить согласованный baseline отдельным понятным коммитом.
 - [x] Провести инвентаризацию поведения `legacy/index.html` и оформить проверяемый список функций для переноса.
 - [x] Зафиксировать границы Этапа 1: React, Node.js API, PostgreSQL, Docker Compose и gateway; не переносить продуктовые данные до Этапа 5.
-- [ ] Создать структуру `apps`, `packages`, `db`, `ops`, Compose, gateway и `.env.example`.
+- [x] Создать структуру `apps`, `packages`, `db`, `ops`, Compose, gateway и `.env.example`.
 - [ ] Запустить и проверить frontend, API, PostgreSQL, health checks и dev-миграции локально.
 
 ## Правило обновления
@@ -33,7 +33,8 @@
 - 2026-07-16: Git-история восстановлена из `murodbohodirov3-pixel/contracts-miniapp`; активна ветка `main`, настроен `origin`, исходные рабочие файлы не перезаписывались.
 - 2026-07-16: `legacy/index.html` совпадает с прежним `index.html` после нормализации переносов строк; `git diff --check` и проверка на типовые секреты пройдены.
 - 2026-07-16: матрица поведения и критерии паритета сохранены в `docs/legacy-parity.md`; Этап 0 закрыт.
+- 2026-07-16: каркас React/Fastify/Compose создан; `npm run check`, `npm run build` и HTTP smoke-test `/health/live`, `/api/v1/meta` пройдены.
 
 ## Следующий шаг
 
-Создать и проверить локальный Docker-стек Этапа 1. Docker CLI отсутствует в текущей Windows-сессии, поэтому запуск контейнеров потребует установки или запуска Docker Desktop.
+Установить или запустить Docker Desktop в текущей Windows-сессии, затем выполнить `docker compose --profile migrate run --rm migrate` и `docker compose up -d --build` для закрытия Этапа 1.

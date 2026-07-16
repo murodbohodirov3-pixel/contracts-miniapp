@@ -1,0 +1,14 @@
+{
+  "name": "contracts-mini-app",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "check": "npm run check --workspaces",
+    "test": "npm run test --workspaces --if-present",
+    "dev:api": "npm run dev --workspace=@contracts/api",
+    "dev:web": "npm run dev --workspace=@contracts/web"
+  },
+  "engines": { "node": ">=24.0.0" }
+}
