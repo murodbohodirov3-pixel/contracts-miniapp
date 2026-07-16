@@ -47,6 +47,7 @@
 - 2026-07-16: серверный `docker compose config` выявил YAML parser error в flow mapping API environment; конфигурация исправлена отдельным commit для повторной проверки на сервере.
 - 2026-07-16: серверный build выявил отсутствующий Node image tag; Dockerfile обновлены на существующие фиксированные official tags Node 24.18.0/Alpine 3.23 и Nginx 1.30.3/Alpine 3.23.
 - 2026-07-16: server migration выявил SSL default `migrate`; внутренний `DATABASE_URL` фиксирует `sslmode=disable` для Docker PostgreSQL.
+- 2026-07-16: повторный server migration сохранил SSL error через Compose interpolation; migrate URL теперь формируется напрямую из `POSTGRES_*` с фиксированным `sslmode=disable`.
 
 ## Следующий шаг
 

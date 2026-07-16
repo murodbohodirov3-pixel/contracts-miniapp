@@ -19,7 +19,10 @@ services:
     depends_on:
       postgres: { condition: service_healthy }
     volumes: [./db/migrations:/migrations:ro]
-    command: ["-path=/migrations", "-database=${DATABASE_URL}", "up"]
+    command:
+      - "-path=/migrations"
+      - "-database=postgres://${POSTGRES_USER:-contracts_app}:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-contracts}?sslmode=disable"
+      - "up"
 
   api:
     build: { context: ., dockerfile: apps/api/Dockerfile }
