@@ -5,11 +5,10 @@
 ## Локальный запуск
 
 1. Скопировать `.env.example` в `.env` и задать уникальные `POSTGRES_PASSWORD` и `SESSION_SECRET`.
-2. Применить миграции: `docker compose --profile migrate run --rm migrate`.
-3. Запустить стек: `docker compose up -d --build`.
+2. Запустить стек: `docker compose up -d --build`. Контейнер `migrate` применит миграции до запуска API.
 4. Открыть `http://localhost:8080` и проверить `http://localhost:8080/health/ready`.
 
-Порт PostgreSQL и API не публикуются; наружу доступен только gateway на `8080`.
+Порт PostgreSQL и API не публикуются; наружу доступен только gateway на `8080`. Для ежесуточной копии используется host timer: `docker compose --profile ops run --rm backup`.
 
 - Полный план: `project_deploy.md`
 - Рабочий чек-лист: `to-do.md`

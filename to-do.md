@@ -19,6 +19,7 @@
 - [x] Зафиксировать границы Этапа 1: React, Node.js API, PostgreSQL, Docker Compose и gateway; не переносить продуктовые данные до Этапа 5.
 - [x] Создать структуру `apps`, `packages`, `db`, `ops`, Compose, gateway и `.env.example`.
 - [x] Подготовить миграции 000001–000009, Argon2id-сессии, роли, доступ к подразделениям, аудит и bootstrap первого администратора; runtime-проверка ожидает Docker/PostgreSQL.
+- [x] Подготовить API и UI договоров, оплат, файлов, серверных агрегатов и XLSX-экспорта; подготовить повторяемые export/import, backup/restore и серверные runbooks.
 - [ ] Запустить и проверить frontend, API, PostgreSQL, health checks и dev-миграции локально.
 
 ## Правило обновления
@@ -36,6 +37,7 @@
 - 2026-07-16: матрица поведения и критерии паритета сохранены в `docs/legacy-parity.md`; Этап 0 закрыт.
 - 2026-07-16: каркас React/Fastify/Compose создан; `npm run check`, `npm run build` и HTTP smoke-test `/health/live`, `/api/v1/meta` пройдены.
 - 2026-07-16: миграции имеют все девять пар up/down; Argon2id hash/verify и unit-тест доступа к подразделениям пройдены локально.
+- 2026-07-16: TypeScript, unit-тесты, production build и `npm audit --omit=dev` проходят; Docker/PostgreSQL и реальные Supabase/IT-данные по-прежнему недоступны.
 
 ## Следующий шаг
 
