@@ -1,5 +1,7 @@
 # Contracts Mini App
 
-Static HTML app for contracts and payments. Host with GitHub Pages and connect to Telegram as Mini App via BotFather.
+Система учета договоров и оплат. Проект переводится со статического Supabase-прототипа на полноценное приложение с React, Node.js API, PostgreSQL и Docker.
 
-Main file: `index.html`
+- Полный план: `project_deploy.md`
+- Правила работы: `AGENTS.md`
+- Исходный прототип: `legacy/index.html`
