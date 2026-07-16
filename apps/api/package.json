@@ -8,7 +8,7 @@
     "build": "tsc -p tsconfig.json",
     "check": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run",
-    "bootstrap-admin": "tsx src/scripts/bootstrap-admin.ts",
+    "bootstrap-admin": "node dist/scripts/bootstrap-admin.js",
     "export-supabase": "tsx src/scripts/export-supabase.ts",
     "import-legacy": "tsx src/scripts/import-legacy.ts"
   },

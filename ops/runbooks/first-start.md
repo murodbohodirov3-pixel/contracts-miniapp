@@ -4,4 +4,4 @@
 2. Создать `.env` из `.env.example`, установить уникальные `POSTGRES_PASSWORD` и `SESSION_SECRET`, ограничить доступ к файлу.
 3. Запустить `docker compose up -d --build`; миграции применяются одноразовым контейнером до API.
 5. Проверить `http://SERVER:8080/health/live` и `http://SERVER:8080/health/ready`.
-6. Создать первого администратора командой API после реализации Этапа 2.
+6. Создать первого администратора: `docker compose exec api npm run bootstrap-admin -- admin@example.uz CHANGE_THIS_PASSWORD "Администратор"`.
