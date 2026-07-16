@@ -1,11 +1,14 @@
 import argon2 from 'argon2';
 import cookie from '@fastify/cookie';
 import cors from '@fastify/cors';
+import multipart from '@fastify/multipart';
 import Fastify, { type FastifyInstance, type FastifyRequest } from 'fastify';
 import { z } from 'zod';
 import { writeAudit } from './audit.js';
 import { canAccessDepartment, clearSessionCookie, createSession, isAdmin, loadSessionUser, revokeSession, setSessionCookie, sessionCookie, type AuthUser } from './auth.js';
 import { createDatabase, type Database, withTransaction } from './db.js';
+import { registerContractRoutes } from './contract-routes.js';
+import { registerReportRoutes } from './report-routes.js';
 
 declare module 'fastify' { interface FastifyRequest { authUser: AuthUser | null } }
 
@@ -24,6 +27,7 @@ export const buildApp = (db: Database = createDatabase()): FastifyInstance => {
   app.decorateRequest('authUser', null);
   void app.register(cookie);
   void app.register(cors, { origin: process.env.APP_ORIGIN ?? false, credentials: true });
+  void app.register(multipart, { limits: { fileSize: Number(process.env.MAX_FILE_SIZE_BYTES ?? 10_485_760), files: 1 } });
 
   app.addHook('onRequest', async (request) => { request.authUser = await loadSessionUser(db, request); });
   app.addHook('onClose', async () => { await db.end(); });
@@ -119,6 +123,8 @@ export const buildApp = (db: Database = createDatabase()): FastifyInstance => {
     if (!id.success || !canAccessDepartment(user, id.data)) return reply.code(403).send(forbidden());
     return { data: { allowed: true } };
   });
+  void app.register(async (scope) => registerContractRoutes(scope, db));
+  void app.register(async (scope) => registerReportRoutes(scope, db));
   return app;
 };
 
